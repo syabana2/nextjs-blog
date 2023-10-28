@@ -3,8 +3,10 @@
 import Image from "next/image";
 import styles from "./writePage.module.css";
 import { useState } from "react";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
 import "react-quill/dist/quill.bubble.css";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const modules = {
   toolbar: [
