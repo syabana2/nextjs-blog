@@ -2,26 +2,34 @@ import Image from "next/image";
 import styles from "./Card.module.css";
 import Link from "next/link";
 
-const Card = () => {
+const dateOptions = {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+};
+
+const Card = ({ post }) => {
+  const formattedDate = new Date(post.createdAt).toLocaleString("id-ID", dateOptions);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} key={post.id}>
       <div className={styles.imageContainer}>
-        <Image src="/p1.jpeg" alt="" fill className={styles.image} />
+        <Image src={`${post.img}`} alt="" fill className={styles.image} />
       </div>
       <div className={styles.textContainer}>
         <div className={styles.detail}>
-          <span className={styles.date}>11.02.2023 - </span>
-          <span className={styles.category}>CULTURE</span>
+          <span className={styles.date}>{formattedDate} - </span>
+          <span className={styles.category}>{post.catSlug.toUpperCase()}</span>
         </div>
         <Link href="/">
-          <h1>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, sit.
-          </h1>
+          <h1>{post.title} </h1>
         </Link>
-        <p className={styles.desc}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Harum optio non explicabo ea excepturi nisi veniam qui sequi aut sint, enim facilis veritatis, animi vel facere ducimus, asperiores delectus? Totam fuga saepe, quos mollitia alias aliquid quod asperiores sed officiis omnis labore! Iusto quos est consectetur odit nihil, accusantium similique.
-        </p>
-        <Link href="/" className={styles.link}>Read More</Link>
+        <p className={styles.desc}>{post.desc} </p>
+        <Link href="/" className={styles.link}>
+          Read More
+        </Link>
       </div>
     </div>
   );

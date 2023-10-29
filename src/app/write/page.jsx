@@ -5,6 +5,8 @@ import styles from "./writePage.module.css";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.bubble.css";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -41,6 +43,19 @@ const formats = [
 const WritePage = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+
+  const { status } = useSession();
+  const router = useRouter();
+
+  if (status === "loading") {
+    return <div className={styles.loading}>Loading...</div>;
+  }
+
+  if (status === "authenticated") {
+    setTimeout(() => {
+      router.push("/");
+    }, 0);
+  }
 
   return (
     <div className={styles.container}>
