@@ -12,7 +12,8 @@ const getDataPosts = async (page, cat) => {
   );
 
   if (!res.ok) {
-    throw new Error("Failed");
+    const error = new Error(res.message);
+    throw error;
   }
 
   return res.json();
