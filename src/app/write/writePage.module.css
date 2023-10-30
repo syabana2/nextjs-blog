@@ -53,10 +53,8 @@
 }
 
 .publish {
-  position: absolute;
-  top: 30px;
-  right: 20px;
   padding: 10px 20px;
+  margin-top: 60px;
   border: none;
   background-color: #1a8917;
   color: white;

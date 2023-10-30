@@ -3,21 +3,17 @@ import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
-  const page = parseInt(searchParams.get("page")) || 1;
-  const POST_PER_PAGE = parseInt(process.env.POST_PER_PAGE);
-
-  const query = {
-    take: POST_PER_PAGE,
-    skip: POST_PER_PAGE * (page - 1),
-  };
+  const postSlug = searchParams.get("postSlug");
 
   try {
-    const [posts, count] = await prisma.$transaction([
-      prisma.post.findMany(query),
-      prisma.post.count(),
-    ]);
+    const comments = await prisma.comment.findMany({
+      where: {
+        ...(postSlug && { postSlug }),
+      },
+      include: { user: true },
+    });
 
-    return new NextResponse(JSON.stringify({posts, count}), {
+    return new NextResponse(JSON.stringify(comments), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
