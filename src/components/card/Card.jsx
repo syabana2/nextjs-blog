@@ -19,7 +19,10 @@ const Card = ({ post }) => {
         <Link href={`/posts/${post.slug}`}>
           <h1>{post.title}</h1>
         </Link>
-        <p className={styles.desc}>{post.desc.substring(0, 200)}...</p>
+        <div
+          className={styles.desc}
+          dangerouslySetInnerHTML={{ __html: post.desc.substring(0, 200) }}
+        />
         <Link href={`/posts/${post.slug}`} className={styles.link}>
           Read More
         </Link>
